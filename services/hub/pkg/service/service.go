@@ -2,6 +2,9 @@ package service
 
 import (
 	"github.com/go-chi/chi/v5"
+	"github.com/owncloud/ocis/v2/ocis-pkg/account"
+	opkgm "github.com/owncloud/ocis/v2/ocis-pkg/middleware"
+	"github.com/owncloud/ocis/v2/services/hub/pkg/config"
 	"net/http"
 )
 
@@ -12,8 +15,14 @@ type Service struct {
 }
 
 // New returns a service implementation for Service.
-func New() Service {
+func New(cfg *config.Config) Service {
 	m := chi.NewMux()
+	m.Use(
+		opkgm.ExtractAccountUUID(
+			account.JWTSecret(cfg.TokenManager.JWTSecret),
+		),
+	)
+
 	m.Route("/hub", func(r chi.Router) {
 		r.Route("/sse", ServeSSE)
 	})

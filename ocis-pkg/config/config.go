@@ -13,6 +13,7 @@ import (
 	gateway "github.com/owncloud/ocis/v2/services/gateway/pkg/config"
 	graph "github.com/owncloud/ocis/v2/services/graph/pkg/config"
 	groups "github.com/owncloud/ocis/v2/services/groups/pkg/config"
+	hub "github.com/owncloud/ocis/v2/services/hub/pkg/config"
 	idm "github.com/owncloud/ocis/v2/services/idm/pkg/config"
 	idp "github.com/owncloud/ocis/v2/services/idp/pkg/config"
 	nats "github.com/owncloud/ocis/v2/services/nats/pkg/config"
@@ -96,6 +97,7 @@ type Config struct {
 	Postprocessing    *postprocessing.Config `yaml:"postprocessing"`
 	Proxy             *proxy.Config          `yaml:"proxy"`
 	Settings          *settings.Config       `yaml:"settings"`
+	Hub               *hub.Config            `yaml:"settings"`
 	Sharing           *sharing.Config        `yaml:"sharing"`
 	StorageSystem     *storagesystem.Config  `yaml:"storage_system"`
 	StoragePublicLink *storagepublic.Config  `yaml:"storage_public"`

@@ -2,6 +2,8 @@ package command
 
 import (
 	"github.com/owncloud/ocis/v2/ocis-pkg/config"
+	"github.com/owncloud/ocis/v2/ocis-pkg/config/configlog"
+	"github.com/owncloud/ocis/v2/ocis-pkg/config/parser"
 	"github.com/owncloud/ocis/v2/ocis/pkg/command/helper"
 	"github.com/owncloud/ocis/v2/ocis/pkg/register"
 	"github.com/owncloud/ocis/v2/services/hub/pkg/command"
@@ -9,12 +11,17 @@ import (
 )
 
 // HubCommand is the entrypoint for the web command.
-func HubCommand(_ *config.Config) *cli.Command {
+func HubCommand(cfg *config.Config) *cli.Command {
 	return &cli.Command{
-		Name:        "hub",
-		Usage:       helper.SubcommandDescription("hub"),
-		Category:    "services",
-		Subcommands: command.GetCommands(),
+		Name:     cfg.Hub.Service.Name,
+		Usage:    helper.SubcommandDescription(cfg.Hub.Service.Name),
+		Category: "services",
+		Before: func(c *cli.Context) error {
+			configlog.Error(parser.ParseConfig(cfg, true))
+			cfg.WebDAV.Commons = cfg.Commons
+			return nil
+		},
+		Subcommands: command.GetCommands(cfg.Hub),
 	}
 }
 

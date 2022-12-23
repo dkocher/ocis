@@ -3,6 +3,7 @@ package command
 import (
 	"context"
 	ociscfg "github.com/owncloud/ocis/v2/ocis-pkg/config"
+	"github.com/owncloud/ocis/v2/services/hub/pkg/config"
 	"os"
 
 	"github.com/owncloud/ocis/v2/ocis-pkg/clihelper"
@@ -11,33 +12,39 @@ import (
 )
 
 // GetCommands provides all commands for this service
-func GetCommands() cli.Commands {
+func GetCommands(cfg *config.Config) cli.Commands {
 	return []*cli.Command{
-		Server(),
+		Server(cfg),
 	}
 }
 
 // Execute is the entry point for the web command.
-func Execute() error {
+func Execute(cfg *config.Config) error {
 	app := clihelper.DefaultApp(&cli.App{
 		Name:     "hub",
 		Usage:    "Serve ownCloud hub for oCIS",
-		Commands: GetCommands(),
+		Commands: GetCommands(cfg),
 	})
 
 	return app.Run(os.Args)
 }
 
 // SutureService allows for the web command to be embedded and supervised by a suture supervisor tree.
-type SutureService struct{}
-
-// NewSutureService creates a new web.SutureService
-func NewSutureService(_ *ociscfg.Config) suture.Service {
-	return SutureService{}
+type SutureService struct {
+	cfg *config.Config
 }
 
-func (s SutureService) Serve(_ context.Context) error {
-	if err := Execute(); err != nil {
+// NewSutureService creates a new web.SutureService
+func NewSutureService(cfg *ociscfg.Config) suture.Service {
+	cfg.Hub.Commons = cfg.Commons
+	return SutureService{
+		cfg: cfg.Hub,
+	}
+}
+
+func (s SutureService) Serve(ctx context.Context) error {
+	s.cfg.Context = ctx
+	if err := Execute(s.cfg); err != nil {
 		return err
 	}
 

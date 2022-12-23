@@ -11,6 +11,7 @@ import (
 	gateway "github.com/owncloud/ocis/v2/services/gateway/pkg/config/defaults"
 	graph "github.com/owncloud/ocis/v2/services/graph/pkg/config/defaults"
 	groups "github.com/owncloud/ocis/v2/services/groups/pkg/config/defaults"
+	hub "github.com/owncloud/ocis/v2/services/hub/pkg/config/defaults"
 	idm "github.com/owncloud/ocis/v2/services/idm/pkg/config/defaults"
 	idp "github.com/owncloud/ocis/v2/services/idp/pkg/config/defaults"
 	nats "github.com/owncloud/ocis/v2/services/nats/pkg/config/defaults"
@@ -71,5 +72,6 @@ func DefaultConfig() *Config {
 		Users:             users.DefaultConfig(),
 		Web:               web.DefaultConfig(),
 		WebDAV:            webdav.DefaultConfig(),
+		Hub:               hub.DefaultConfig(),
 	}
 }

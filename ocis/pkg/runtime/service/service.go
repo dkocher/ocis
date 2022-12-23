@@ -128,7 +128,7 @@ func NewService(options ...Option) (*Service, error) {
 	s.ServicesRegistry[opts.Config.Notifications.Service.Name] = notifications.NewSutureService
 	s.ServicesRegistry[opts.Config.Search.Service.Name] = search.NewSutureService
 	s.ServicesRegistry[opts.Config.Postprocessing.Service.Name] = postprocessing.NewSutureService
-	s.ServicesRegistry["hub"] = hub.NewSutureService
+	s.ServicesRegistry[opts.Config.Hub.Service.Name] = hub.NewSutureService
 
 	// populate delayed services
 	s.Delayed[opts.Config.Sharing.Service.Name] = sharing.NewSutureService
