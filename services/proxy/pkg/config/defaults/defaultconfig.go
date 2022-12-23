@@ -9,13 +9,6 @@ import (
 	"github.com/owncloud/ocis/v2/services/proxy/pkg/config"
 )
 
-func FullDefaultConfig() *config.Config {
-	cfg := DefaultConfig()
-	EnsureDefaults(cfg)
-	Sanitize(cfg)
-	return cfg
-}
-
 func DefaultConfig() *config.Config {
 	return &config.Config{
 		Debug: config.Debug{
@@ -72,6 +65,10 @@ func DefaultPolicies() []config.Policy {
 					Endpoint:    "/",
 					Service:     "com.owncloud.web.web",
 					Unprotected: true,
+				},
+				{
+					Endpoint: "/hub",
+					Service:  "com.owncloud.web.hub",
 				},
 				{
 					Endpoint:    "/.well-known/",
