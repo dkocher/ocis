@@ -1,8 +1,9 @@
 package defaults
 
 import (
-	"github.com/owncloud/ocis/v2/services/hub/pkg/config"
 	"strings"
+
+	"github.com/owncloud/ocis/v2/services/hub/pkg/config"
 )
 
 // DefaultConfig returns the default config
@@ -15,6 +16,11 @@ func DefaultConfig() *config.Config {
 			Addr:      "127.0.0.1:9180",
 			Namespace: "com.owncloud.web",
 			Root:      "/",
+		},
+		Events: config.Events{
+			Endpoint:  "127.0.0.1:9233",
+			Cluster:   "ocis-cluster",
+			EnableTLS: false,
 		},
 	}
 }
