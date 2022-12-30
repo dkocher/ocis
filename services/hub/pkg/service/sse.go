@@ -16,6 +16,7 @@ import (
 	revactx "github.com/cs3org/reva/v2/pkg/ctx"
 	"github.com/cs3org/reva/v2/pkg/events"
 	"github.com/cs3org/reva/v2/pkg/rgrpc/todo/pool"
+	"github.com/cs3org/reva/v2/pkg/storagespace"
 	"github.com/go-chi/chi/v5"
 	"github.com/r3labs/sse/v2"
 	"google.golang.org/grpc/metadata"
@@ -82,16 +83,29 @@ func extractDetails(e interface{}, gwc gateway.GatewayAPIClient) (<-chan string,
 	// determining recipients can take longer. We spawn a seperate go routine to do it
 	ch := determineRecipients(e, gwc)
 
-	var (
-		event []byte
-	)
+	var event interface{}
+
 	switch ev := e.(type) {
 	case events.UploadReady:
-		t := time.Now()
-		event = []byte(fmt.Sprintf("[%s] Hello! The file %s is ready to work with", t.Format("2006-01-02 15:04:05"), ev.Filename))
+
+		// TODO: add timestamp to event
+		t := time.Now().Format("2006-01-02 15:04:05")
+		id, _ := storagespace.FormatReference(ev.FileRef)
+		event = UploadReady{
+			FileID:    id,
+			Filename:  ev.Filename,
+			Timestamp: t,
+			Message:   fmt.Sprintf("[%s] Hello! The file %s is ready to work with", t, ev.Filename),
+		}
+
 	}
 
-	return ch, event
+	b, err := json.Marshal(event)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return ch, b
 }
 
 func determineRecipients(e interface{}, gwc gateway.GatewayAPIClient) <-chan string {
