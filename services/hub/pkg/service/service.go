@@ -35,7 +35,7 @@ func New(cfg *config.Config) Service {
 		log.Fatal("cant consume events", err)
 	}
 	m.Route("/hub", func(r chi.Router) {
-		r.Route("/sse", ServeSSE(ch))
+		r.Route("/sse", ServeSSE(ch, cfg))
 	})
 
 	svc := Service{
