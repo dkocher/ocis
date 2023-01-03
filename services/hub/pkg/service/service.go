@@ -30,12 +30,23 @@ func New(cfg *config.Config) Service {
 			account.JWTSecret(cfg.TokenManager.JWTSecret),
 		),
 	)
+
+	s, err := NewSSE(cfg)
+	if err != nil {
+		log.Fatal("cant initiate sse", err)
+	}
+
 	ch, err := eventsConsumer(cfg.Events)
 	if err != nil {
 		log.Fatal("cant consume events", err)
 	}
+
+	go s.ListenForEvents(ch)
+
 	m.Route("/hub", func(r chi.Router) {
-		r.Route("/sse", ServeSSE(ch, cfg))
+		r.Route("/sse", func(r chi.Router) {
+			r.Get("/", s.ServeHTTP)
+		})
 	})
 
 	svc := Service{
