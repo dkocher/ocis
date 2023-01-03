@@ -26,6 +26,7 @@ OCIS_MODULES = \
 	services/gateway \
 	services/graph \
 	services/groups \
+	services/hub \
 	services/idm \
 	services/idp \
 	services/nats \
