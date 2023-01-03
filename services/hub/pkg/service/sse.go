@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	gateway "github.com/cs3org/go-cs3apis/cs3/gateway/v1beta1"
+	group "github.com/cs3org/go-cs3apis/cs3/identity/group/v1beta1"
 	user "github.com/cs3org/go-cs3apis/cs3/identity/user/v1beta1"
 	rpc "github.com/cs3org/go-cs3apis/cs3/rpc/v1beta1"
 	provider "github.com/cs3org/go-cs3apis/cs3/storage/provider/v1beta1"
@@ -140,18 +141,41 @@ func determineRecipients(e interface{}, gwc gateway.GatewayAPIClient, cfg *confi
 		informed[user.GetId().GetOpaqueId()] = struct{}{}
 
 		// inform space members next
-		var m map[string]*provider.ResourcePermissions
-		if err := utils.ReadJSONFromOpaque(space.GetOpaque(), "grants", &m); err == nil {
-			// FIXME: Which space permissions allow me to get this event?
-			for u := range m {
-				// TODO: Resolve group recipients
+		var grants map[string]*provider.ResourcePermissions
+		if err := utils.ReadJSONFromOpaque(space.GetOpaque(), "grants", &grants); err == nil {
+			var (
+				groups = make(map[string][]string)
+				grpids map[string]struct{}
+			)
+			if err := utils.ReadJSONFromOpaque(space.GetOpaque(), "groups", &grpids); err == nil {
+				for g := range grpids {
+					r, err := gwc.GetGroup(ctx, &group.GetGroupRequest{GroupId: &group.GroupId{OpaqueId: g}})
+					if err != nil || r.GetStatus().GetCode() != rpc.Code_CODE_OK {
+						log.Println(err)
+					}
 
-				if _, ok := informed[u]; ok {
-					continue
+					for _, uid := range r.GetGroup().GetMembers() {
+						groups[g] = append(groups[g], uid.GetOpaqueId())
+					}
 				}
 
-				ch <- u
-				informed[u] = struct{}{}
+			}
+
+			// FIXME: Which space permissions allow me to get this event?
+			for id := range grants {
+				users, ok := groups[id]
+				if !ok {
+					users = []string{id}
+				}
+
+				for _, u := range users {
+					if _, ok := informed[u]; ok {
+						continue
+					}
+
+					ch <- u
+					informed[u] = struct{}{}
+				}
 			}
 		}
 
