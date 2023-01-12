@@ -42,5 +42,5 @@ type Events struct {
 	Cluster              string `yaml:"cluster" env:"HUB_EVENTS_CLUSTER" desc:"The clusterID of the event system. The event system is the message queuing service. It is used as message broker for the microservice architecture. Mandatory when using NATS as event system."`
 	TLSInsecure          bool   `yaml:"tls_insecure" env:"OCIS_INSECURE;HUB_EVENTS_TLS_INSECURE" desc:"Whether the server should skip the client certificate verification during the TLS handshake."`
 	TLSRootCACertificate string `yaml:"tls_root_ca_certificate" env:"HUB_EVENTS_TLS_ROOT_CA_CERTIFICATE" desc:"The root CA certificate used to validate the server's TLS certificate. If provided HUB_EVENTS_TLS_INSECURE will be seen as false."`
-	EnableTLS            bool   `yaml:"enable_tls" env:"OCIS_EVENTS_ENABLE_TLS;HUB_EVENTS_ENABLE_TLS" desc:"Enable TLS for the connection to the events broker. The events broker is the ocis service which receives and delivers events between the services.."`
+	EnableTLS            bool   `yaml:"enable_tls" env:"OCIS_EVENTS_ENABLE_TLS;HUB_EVENTS_ENABLE_TLS" desc:"Enable TLS for the connection to the events broker. The events broker is the ocis service which receives and delivers events between the services."`
 }
