@@ -418,14 +418,6 @@ Feature: update a public link share
     Then the HTTP status code of responses on all endpoints should be "204"
     And as "Alice" file "PARENT/CHILD/child.txt" should not exist
     And as "Alice" file "PARENT/parent.txt" should not exist
-
-    @notToImplementOnOCIS @issue-ocis-2079
-    Examples:
-      | ocs_api_version | public-webdav-api-version |
-      | 1               | old                       |
-      | 2               | old                       |
-
-
     Examples:
       | ocs_api_version | public-webdav-api-version |
       | 1               | new                       |
