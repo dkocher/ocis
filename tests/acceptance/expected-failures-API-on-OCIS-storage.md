@@ -223,12 +223,7 @@ cannot share a folder with create permission
 
 #### [Public link enforce permissions](https://github.com/owncloud/ocis/issues/1269)
 
-- [coreApiSharePublicLink1/accessToPublicLinkShare.feature:10](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/accessToPublicLinkShare.feature#L10)
-- [coreApiSharePublicLink1/accessToPublicLinkShare.feature:21](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/accessToPublicLinkShare.feature#L21)
-- [coreApiSharePublicLink1/accessToPublicLinkShare.feature:31](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/accessToPublicLinkShare.feature#L31)
-- [coreApiSharePublicLink1/accessToPublicLinkShare.feature:47](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/accessToPublicLinkShare.feature#L47)
-- [coreApiSharePublicLink1/createPublicLinkShare.feature:528](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/createPublicLinkShare.feature#L528)
-- [coreApiSharePublicLink1/createPublicLinkShare.feature:549](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/createPublicLinkShare.feature#L549)
+- [coreApiSharePublicLink1/createPublicLinkShare.feature:354](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/createPublicLinkShare.feature#L354)
 
 #### [download previews of other users file](https://github.com/owncloud/ocis/issues/2071)
 
@@ -250,12 +245,6 @@ cannot share a folder with create permission
 - [coreApiWebdavPreviews/previews.feature:164](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiWebdavPreviews/previews.feature#L164)
 - [coreApiWebdavPreviews/previews.feature:176](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiWebdavPreviews/previews.feature#L176)
 - [coreApiWebdavPreviews/previews.feature:177](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiWebdavPreviews/previews.feature#L177)
-
-#### [creating public links with permissions fails](https://github.com/owncloud/product/issues/252)
-
-- [coreApiSharePublicLink1/changingPublicLinkShare.feature:30](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/changingPublicLinkShare.feature#L30)
-- [coreApiSharePublicLink1/changingPublicLinkShare.feature:51](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/changingPublicLinkShare.feature#L51)
-- [coreApiSharePublicLink1/changingPublicLinkShare.feature:90](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/changingPublicLinkShare.feature#L90)
 
 #### [copying a folder within a public link folder to folder with same name as an already existing file overwrites the parent file](https://github.com/owncloud/ocis/issues/1232)
 
@@ -510,6 +499,7 @@ API, search, favorites, config, capabilities, not existing endpoints, CORS and o
 - [coreApiAuthOcs/ocsGETAuth.feature:121](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiAuthOcs/ocsGETAuth.feature#L121)
 - [coreApiAuthOcs/ocsPOSTAuth.feature:8](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiAuthOcs/ocsPOSTAuth.feature#L8)
 - [coreApiAuthOcs/ocsPUTAuth.feature:8](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiAuthOcs/ocsPUTAuth.feature#L8)
+- [coreApiSharePublicLink1/createPublicLinkShare.feature:344](https://github.com/owncloud/ocis/blob/master/tests/acceptance/features/coreApiSharePublicLink1/createPublicLinkShare.feature#L344)
 
 #### [sending MKCOL requests to another user's webDav endpoints as normal user gives 404 instead of 403 ](https://github.com/owncloud/ocis/issues/3872)
 
